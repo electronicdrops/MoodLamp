@@ -1,0 +1,10 @@
+
+MoodLamp	KEYWORD1
+
+color		KEYWORD2
+brightness 	KEYWORD2
+wheel		KEYWORD2
+fade		KEYWORD2
+
+
+
