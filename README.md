@@ -71,17 +71,24 @@ void loop() {
 
 This is a basic example of how to use the library.
 
-You could change the color using
+You could change the color using 
 
 ``` c++
 moodlamp.color(COLOR_CYAN);
 ```
+*The color will vary from 0  to 359. 360; Red to Blue. 360 is White. this follows the Color Wheel.*
+
+
 
 Change the brightness
 
 ``` c++
 moodlamp.brightness(50);
 ```
+
+*brightness vary from 0 - 100 in percentage.*
+
+
 
 Or use the fade function
 
