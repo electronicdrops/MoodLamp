@@ -26,7 +26,8 @@ void MoodLamp::begin(){
 
   _wheel_time = 0;
   _fade_time = 0;
-  _fade_direction = false;
+  _fade_offset = 0;
+  _fade_min = 10;
 
 
   wheel(0);
@@ -230,31 +231,35 @@ void MoodLamp::color_wheel() {
 }
 
 
+
+
 void MoodLamp::color_fade() {
 
-  int brightness_;
+ int brightness_;
 
-  if (millis() - _fade_time > (unsigned long)fade_speed()) {
+if (millis() - _fade_time > (unsigned long)fade_speed()) {
+ 
+ 
 
-    brightness_ = brightness();
+ brightness_ = -abs(_fade_offset-100)+100;
 
-    if (brightness_ >= 100) {
-      _fade_direction = false;
-    }
-    if (brightness_ <= 30) {
-      _fade_direction = true;
-    }
+  if(brightness_ < _fade_min){
+   brightness_ = _fade_min;
+   _fade_offset = 100 - abs(brightness_ - 100);
+ }
 
-    if (_fade_direction) {
-      brightness_ += 5;
-    } else {
-      brightness_ -= 5;
-    }
-    brightness(brightness_);
-    _fade_time = millis();
-    //update_color();
-  }
+ brightness(brightness_);
+ _fade_time = millis();
+ _fade_offset++;
+ _fade_offset %= 200;
+
 }
+
+}
+
+
+
+
 
 
 void MoodLamp::hueToRGB(int hue, int brightness) {
