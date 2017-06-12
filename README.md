@@ -1,5 +1,6 @@
 # MoodLamp
-This is a simple Arduino Library that controls any RGB Led through 3 PWM Pins.
+This is a simple Arduino-like Library that controls any RGB Led through 3 PWM Pins.
+This library works with ESP8266 NodeMCU too.
 
 With an RGB Led you could create best light projects. But not only this, you could use and RGB Led to test a lot of sensor and other things with microcontrollers.
 
