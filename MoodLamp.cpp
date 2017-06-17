@@ -26,8 +26,7 @@ void MoodLamp::begin(){
 
   _wheel_time = 0;
   _fade_time = 0;
-  _fade_offset = 0;
-  _fade_min = 10;
+  _fade_direction = false;
 
 
   wheel(0);
@@ -231,35 +230,31 @@ void MoodLamp::color_wheel() {
 }
 
 
-
-
 void MoodLamp::color_fade() {
 
- int brightness_;
+  int brightness_;
 
-if (millis() - _fade_time > (unsigned long)fade_speed()) {
- 
- 
+  if (millis() - _fade_time > (unsigned long)fade_speed()) {
 
- brightness_ = -abs(_fade_offset-100)+100;
+    brightness_ = brightness();
 
-  if(brightness_ < _fade_min){
-   brightness_ = _fade_min;
-   _fade_offset = 100 - abs(brightness_ - 100);
- }
+    if (brightness_ >= 100) {
+      _fade_direction = false;
+    }
+    if (brightness_ <= 30) {
+      _fade_direction = true;
+    }
 
- brightness(brightness_);
- _fade_time = millis();
- _fade_offset++;
- _fade_offset %= 200;
-
+    if (_fade_direction) {
+      brightness_ += 5;
+    } else {
+      brightness_ -= 5;
+    }
+    brightness(brightness_);
+    _fade_time = millis();
+    //update_color();
+  }
 }
-
-}
-
-
-
-
 
 
 void MoodLamp::hueToRGB(int hue, int brightness) {
@@ -312,6 +307,18 @@ void MoodLamp::hueToRGB(int hue, int brightness) {
       _blue = prev;
       break;
   }
+
+
+  #if defined(PWMRANGE)
+
+  _red =   map(_red,  0,255,0,PWMRANGE);
+  _green = map(_green,0,255,0,PWMRANGE);
+  _blue =  map(_blue, 0,255,0,PWMRANGE);
+
+
+  #endif
+
+
 
 
 }

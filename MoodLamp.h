@@ -63,9 +63,9 @@
 class MoodLamp{
 
   private:
-    byte _red;
-    byte _green;
-    byte _blue;
+    int _red;
+    int _green;
+    int _blue;
     int  _color;
     boolean _invert = false;
     int _brightness;
@@ -79,8 +79,7 @@ class MoodLamp{
     byte _fade_state;
     byte _fade_speed;
     long _fade_time;
-    int _fade_offset;
-    int _fade_min;
+    boolean _fade_direction;
 
 
     byte _pin_red;
