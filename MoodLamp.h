@@ -79,7 +79,8 @@ class MoodLamp{
     byte _fade_state;
     byte _fade_speed;
     long _fade_time;
-    boolean _fade_direction;
+    int _fade_offset;
+    int _fade_min;
 
 
     byte _pin_red;
