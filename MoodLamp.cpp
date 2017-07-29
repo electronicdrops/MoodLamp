@@ -3,11 +3,12 @@
 
 
 
-MoodLamp::MoodLamp(byte pin_red, byte pin_green, byte pin_blue){
+MoodLamp::MoodLamp(byte pin_red, byte pin_green, byte pin_blue, byte pin_white){
 
   _pin_red    = pin_red;
   _pin_green  = pin_green;
   _pin_blue   = pin_blue;
+  _pin_white = pin_white;
   _color      = DEFAULT_COLOR;
   _brightness = DEFAULT_BRIGHTNESS;
   _last_brightness = _brightness;
@@ -23,6 +24,11 @@ void MoodLamp::begin(){
   digitalWrite(_pin_red,  LOW);
   digitalWrite(_pin_green,LOW);
   digitalWrite(_pin_blue, LOW);
+
+  if(_pin_white != 255){
+    pinMode(_pin_white, OUTPUT);
+    digitalWrite(_pin_white, LOW);    
+  }
 
   _wheel_time = 0;
   _fade_time = 0;
@@ -146,13 +152,22 @@ void MoodLamp::update_color(){
   // Caso especial para 255, sera usado para a cor branca, e por isso eh necessario tratar o brightness diferente
   // inverto o brightness e subtraio esse valor das cores RGB do sistema.
   if (color_ == 255) {
-    int aux_brightness = map(brightness_, 0, 255, 255, 0);
+    if(_pin_white == 255){
+      int aux_brightness = map(brightness_, 0, 255, 255, 0);
 
-    _red   = 255 - aux_brightness;
-    _green = 255 - aux_brightness;
-    _blue  = 255 - aux_brightness;
-
+      _red   = 255 - aux_brightness;
+      _green = 255 - aux_brightness;
+      _blue  = 255 - aux_brightness;
+      _white = 0;
+    }
+    else{
+      _white = brightness_;
+      _red = 0;
+      _green= 0;
+      _blue = 0;
+    }
   } else {
+    _white = 0;
     hueToRGB(color_, brightness_); // caso nao for branca chama a funcao hueToRGB para atualizar os valores das variaveis
 
   }
@@ -161,6 +176,10 @@ void MoodLamp::update_color(){
   analogWrite(_pin_red,   _red);
   analogWrite(_pin_green, _green);
   analogWrite(_pin_blue,  _blue);
+  
+  if(_pin_white != 255){
+    analogWrite(_pin_white,_white);
+  }
 
 }
 
@@ -178,12 +197,20 @@ void MoodLamp::update_color(int color_, int brightness_){
   // Caso especial para 255, sera usado para a cor branca, e por isso eh necessario tratar o brightness diferente
   // inverto o brightness e subtraio esse valor das cores RGB do sistema.
   if (color_ == 255) {
-    int aux_brightness = map(brightness_, 0, 255, 255, 0);
+    if(_pin_white == 255){
+      int aux_brightness = map(brightness_, 0, 255, 255, 0);
 
-    _red   = 255 - aux_brightness;
-    _green = 255 - aux_brightness;
-    _blue  = 255 - aux_brightness;
-
+      _red   = 255 - aux_brightness;
+      _green = 255 - aux_brightness;
+      _blue  = 255 - aux_brightness;
+      _white = 0;
+    }
+    else{
+      _white = brightness_;
+      _red = 0;
+      _green= 0;
+      _blue = 0;
+    }
   } else {
     hueToRGB(color_, brightness_); // caso nao for branca chama a funcao hueToRGB para atualizar os valores das variaveis
 
@@ -193,20 +220,11 @@ void MoodLamp::update_color(int color_, int brightness_){
   analogWrite(_pin_red,   _red);
   analogWrite(_pin_green, _green);
   analogWrite(_pin_blue,  _blue);
-
-}
-
-
-void MoodLamp::update(){
-
-  if(wheel() == 1){
-    color_wheel();
+  
+  if(_pin_white != 255){
+    analogWrite(_pin_white,_white);
   }
 
-  if(fade() == 1){
-    color_fade();
-  }
-  update_color();
 }
 
 

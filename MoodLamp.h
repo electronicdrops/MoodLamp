@@ -66,6 +66,7 @@ class MoodLamp{
     int _red;
     int _green;
     int _blue;
+    int _white;
     int  _color;
     boolean _invert = false;
     int _brightness;
@@ -86,13 +87,14 @@ class MoodLamp{
     byte _pin_red;
     byte _pin_green;
     byte _pin_blue;
+    byte _pin_white;
 
     void hueToRGB(int hue, int brightness);
     void color_wheel();
     void color_fade();
 
   public:
-    MoodLamp(byte pin_red, byte pin_green, byte pin_blue);
+    MoodLamp(byte pin_red, byte pin_green, byte pin_blue, byte pin_white = 255);
     void begin();
 
     int color();
