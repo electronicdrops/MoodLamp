@@ -228,7 +228,17 @@ void MoodLamp::update_color(int color_, int brightness_){
 }
 
 
+void MoodLamp::update(){
 
+  if(wheel() == 1){
+    color_wheel();
+  }
+
+  if(fade() == 1){
+    color_fade();
+  }
+  update_color();
+}
 
 void MoodLamp::color_wheel() {
 
