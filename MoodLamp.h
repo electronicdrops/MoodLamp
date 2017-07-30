@@ -92,6 +92,7 @@ class MoodLamp{
     void hueToRGB(int hue, int brightness);
     void color_wheel();
     void color_fade();
+    void stop_functions();
 
   public:
     MoodLamp(byte pin_red, byte pin_green, byte pin_blue, byte pin_white = 255);
@@ -112,6 +113,9 @@ class MoodLamp{
     int fade_speed();
     int fade_speed(int speed);
 
+    void on();
+    void off();
+    
     void update_color();
     void update_color(int color_, int brightness_);
 

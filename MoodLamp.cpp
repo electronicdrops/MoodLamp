@@ -44,6 +44,28 @@ void MoodLamp::begin(){
 
 }
 
+void MoodLamp::stop_functions(){
+  wheel(0);
+  fade(0);
+}
+
+void MoodLamp::on(){
+  
+  if(brightness() == 0){
+    if(last_brightness() == 0){
+      brightness(100);
+    }else{
+      brightness(last_brightness());
+    }
+  }
+  stop_functions();
+}
+
+void MoodLamp::off(){
+  brightness(0);
+  stop_functions();
+}
+
 
 int MoodLamp::color(){
   return _color;
